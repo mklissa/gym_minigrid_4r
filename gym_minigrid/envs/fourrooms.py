@@ -3,14 +3,14 @@
 
 from gym_minigrid.minigrid import *
 from gym_minigrid.register import register
-
+from gym import error, spaces, utils
 
 class FourRoomsEnv(MiniGridEnv):
     """
     Classic 4 rooms gridworld environment.
     Can specify agent and goal position, if not it set at random.
     """
-
+# goal_pos=np.array([3,1])):Ω
     def __init__(self, max_steps=100, agent_pos=np.array([3,3]), goal_pos=np.array([9,9])):
         self._agent_default_pos = agent_pos
         self._goal_default_pos = goal_pos

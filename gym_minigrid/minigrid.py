@@ -37,16 +37,16 @@ IDX_TO_COLOR = dict(zip(COLOR_TO_IDX.values(), COLOR_TO_IDX.keys()))
 # Map of object type to integers
 OBJECT_TO_IDX = {
     'unseen'        : 0,
-    'empty'         : 1,
-    'wall'          : 2,
+    'empty'         : 0,
+    'wall'          : 1,
     'floor'         : 3,
     'door'          : 4,
     'key'           : 5,
     'ball'          : 6,
     'box'           : 7,
-    'goal'          : 8,
+    'goal'          : 2,
     'lava'          : 9,
-    'agent'         : 10,
+    'agent'         : 3,
 }
 
 IDX_TO_OBJECT = dict(zip(OBJECT_TO_IDX.values(), OBJECT_TO_IDX.keys()))
@@ -675,7 +675,7 @@ class MiniGridEnv(gym.Env):
         self.observation_space = spaces.Box(
             low=0,
             high=255,
-            shape=(self.agent_view_size, self.agent_view_size, 3),
+            shape=(self.agent_view_size, self.agent_view_size, 1),
             dtype='uint8'
         )
         self.observation_space = spaces.Dict({

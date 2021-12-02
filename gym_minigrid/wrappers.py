@@ -228,7 +228,7 @@ class FullyObsWrapper(gym.core.ObservationWrapper):
         self.observation_space.spaces["image"] = spaces.Box(
             low=0,
             high=255,
-            shape=(self.env.width, self.env.height, 3),  # number of cells
+            shape=(self.env.width, self.env.height, 1),  # number of cells
             dtype='uint8'
         )
 
