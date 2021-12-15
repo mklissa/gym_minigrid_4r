@@ -11,9 +11,12 @@ class FourRoomsEnv(MiniGridEnv):
     Can specify agent and goal position, if not it set at random.
     """
 # goal_pos=np.array([3,1])):Ω
-    def __init__(self, max_steps=100, agent_pos=np.array([3,3]), goal_pos=np.array([9,9])):
+    def __init__(self, max_steps=100, agent_pos=np.array([3,3]),
+     goal_pos=np.array([9,9])):
+     # goal_pos=np.array([3,9])):
         self._agent_default_pos = agent_pos
         self._goal_default_pos = goal_pos
+        self._distraction_default_pos = np.array([9,3])
         super().__init__(grid_size=13, max_steps=max_steps)
 
     def _gen_grid(self, width, height):
@@ -63,6 +66,10 @@ class FourRoomsEnv(MiniGridEnv):
             goal = Goal()
             self.put_obj(goal, *self._goal_default_pos)
             goal.init_pos, goal.cur_pos = self._goal_default_pos
+
+            distraction = Distraction()
+            self.put_obj(distraction, *self._distraction_default_pos)
+            distraction.init_pos, distraction.cur_pos = self._distraction_default_pos
         else:
             self.place_obj(Goal())
 

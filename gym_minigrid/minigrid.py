@@ -17,7 +17,8 @@ COLORS = {
     'blue'  : np.array([0, 0, 255]),
     'purple': np.array([112, 39, 195]),
     'yellow': np.array([255, 255, 0]),
-    'grey'  : np.array([100, 100, 100])
+    'grey'  : np.array([100, 100, 100]),
+    'orange'  : np.array([255, 165, 0])
 }
 
 COLOR_NAMES = sorted(list(COLORS.keys()))
@@ -29,7 +30,8 @@ COLOR_TO_IDX = {
     'blue'  : 2,
     'purple': 3,
     'yellow': 4,
-    'grey'  : 5
+    'grey'  : 5,
+    'orange'  : 6
 }
 
 IDX_TO_COLOR = dict(zip(COLOR_TO_IDX.values(), COLOR_TO_IDX.keys()))
@@ -40,11 +42,12 @@ OBJECT_TO_IDX = {
     'empty'         : 0,
     'wall'          : 1,
     'floor'         : 3,
-    'door'          : 4,
+    'door'          : 10,
     'key'           : 5,
     'ball'          : 6,
     'box'           : 7,
     'goal'          : 2,
+    'distraction'   : 4,
     'lava'          : 9,
     'agent'         : 3,
 }
@@ -140,6 +143,8 @@ class WorldObj:
             v = Door(color, is_open, is_locked)
         elif obj_type == 'goal':
             v = Goal()
+        elif obj_type == 'distraction':
+            v = Distraction()
         elif obj_type == 'lava':
             v = Lava()
         else:
@@ -160,6 +165,18 @@ class Goal(WorldObj):
 
     def render(self, img):
         fill_coords(img, point_in_rect(0, 1, 0, 1), COLORS[self.color])
+
+
+class Distraction(WorldObj):
+    def __init__(self):
+        super().__init__('distraction', 'orange')
+
+    def can_overlap(self):
+        return True
+
+    def render(self, img):
+        fill_coords(img, point_in_rect(0, 1, 0, 1), COLORS[self.color])
+
 
 class Floor(WorldObj):
     """
@@ -614,7 +631,7 @@ class Grid:
                     grid.set(i, j, None)
 
         return mask
-
+#################################################################################################################################################
 class MiniGridEnv(gym.Env):
     """
     2D grid world game environment
@@ -631,17 +648,17 @@ class MiniGridEnv(gym.Env):
         left = 0
         right = 1
         forward = 2
-        back = 7
+        back = 3
 
-        # Pick up an object
-        pickup = 3
-        # Drop an object
-        drop = 4
-        # Toggle/activate an object
-        toggle = 5
+        # # Pick up an object
+        # pickup = 3
+        # # Drop an object
+        # drop = 4
+        # # Toggle/activate an object
+        # toggle = 5
 
-        # Done completing task
-        done = 6
+        # # Done completing task
+        # done = 6
 
     def __init__(
         self,
@@ -1159,6 +1176,8 @@ class MiniGridEnv(gym.Env):
             if left_cell != None and left_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if left_cell != None and left_cell.type == 'distraction':
+                reward = np.random.uniform(-.5,.5)
             if left_cell != None and left_cell.type == 'lava':
                 done = True
 
@@ -1169,6 +1188,8 @@ class MiniGridEnv(gym.Env):
             if right_cell != None and right_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if right_cell != None and right_cell.type == 'distraction':
+                reward = np.random.uniform(-.5,.5)
             if right_cell != None and right_cell.type == 'lava':
                 done = True
 
@@ -1179,6 +1200,8 @@ class MiniGridEnv(gym.Env):
             if back_cell != None and back_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if back_cell != None and back_cell.type == 'distraction':
+                reward = np.random.uniform(-.5,.5)
             if back_cell != None and back_cell.type == 'lava':
                 done = True
 
@@ -1189,6 +1212,8 @@ class MiniGridEnv(gym.Env):
             if fwd_cell != None and fwd_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if fwd_cell != None and fwd_cell.type == 'distraction':
+                reward = np.random.uniform(-.5,.5)
             if fwd_cell != None and fwd_cell.type == 'lava':
                 done = True
 
