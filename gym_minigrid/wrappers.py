@@ -240,6 +240,7 @@ class FullyObsWrapper(gym.core.ObservationWrapper):
             COLOR_TO_IDX['red'],
             env.agent_dir
         ])
+        # import pdb;pdb.set_trace()
 
         return {
             'mission': obs['mission'],

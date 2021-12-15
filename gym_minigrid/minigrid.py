@@ -1263,8 +1263,8 @@ class MiniGridEnv(gym.Env):
         grid = self.grid.slice(topX, topY, self.agent_view_size, self.agent_view_size)
 
 
-        for i in range(self.agent_dir + 1):
-            grid = grid.rotate_left()
+        # for i in range(self.agent_dir + 1):
+        #     grid = grid.rotate_left()
 
         # Process occluders and visibility
         # Note that this incurs some performance cost
