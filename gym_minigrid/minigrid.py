@@ -48,7 +48,7 @@ OBJECT_TO_IDX = {
     'box'           : 7,
     'goal'          : 2,
     'distraction'   : 4,
-    'trap'          : 5,
+    'trap'          : 4,
     'lava'          : 9,
     'agent'         : 3,
 }
