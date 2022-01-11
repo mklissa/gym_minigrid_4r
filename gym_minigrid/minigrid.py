@@ -43,11 +43,12 @@ OBJECT_TO_IDX = {
     'wall'          : 1,
     'floor'         : 3,
     'door'          : 10,
-    'key'           : 5,
+    'key'           : 11,
     'ball'          : 6,
     'box'           : 7,
     'goal'          : 2,
     'distraction'   : 4,
+    'trap'          : 5,
     'lava'          : 9,
     'agent'         : 3,
 }
@@ -145,6 +146,8 @@ class WorldObj:
             v = Goal()
         elif obj_type == 'distraction':
             v = Distraction()
+        elif obj_type == 'trap':
+            v = Trap()
         elif obj_type == 'lava':
             v = Lava()
         else:
@@ -159,6 +162,17 @@ class WorldObj:
 class Goal(WorldObj):
     def __init__(self):
         super().__init__('goal', 'green')
+
+    def can_overlap(self):
+        return True
+
+    def render(self, img):
+        fill_coords(img, point_in_rect(0, 1, 0, 1), COLORS[self.color])
+
+
+class Trap(WorldObj):
+    def __init__(self):
+        super().__init__('trap', 'red')
 
     def can_overlap(self):
         return True
@@ -1176,6 +1190,10 @@ class MiniGridEnv(gym.Env):
             if left_cell != None and left_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+
+            if left_cell != None and left_cell.type == 'trap':
+                done = True
+                reward = -self._reward()
             if left_cell != None and left_cell.type == 'distraction':
                 reward = np.random.uniform(-.5,.5)
             if left_cell != None and left_cell.type == 'lava':
@@ -1188,6 +1206,9 @@ class MiniGridEnv(gym.Env):
             if right_cell != None and right_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if right_cell != None and right_cell.type == 'trap':
+                done = True
+                reward = -self._reward()
             if right_cell != None and right_cell.type == 'distraction':
                 reward = np.random.uniform(-.5,.5)
             if right_cell != None and right_cell.type == 'lava':
@@ -1200,6 +1221,9 @@ class MiniGridEnv(gym.Env):
             if back_cell != None and back_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if back_cell != None and back_cell.type == 'trap':
+                done = True
+                reward = -self._reward()
             if back_cell != None and back_cell.type == 'distraction':
                 reward = np.random.uniform(-.5,.5)
             if back_cell != None and back_cell.type == 'lava':
@@ -1212,6 +1236,9 @@ class MiniGridEnv(gym.Env):
             if fwd_cell != None and fwd_cell.type == 'goal':
                 done = True
                 reward = self._reward()
+            if fwd_cell != None and fwd_cell.type == 'trap':
+                done = True
+                reward = -self._reward()
             if fwd_cell != None and fwd_cell.type == 'distraction':
                 reward = np.random.uniform(-.5,.5)
             if fwd_cell != None and fwd_cell.type == 'lava':

@@ -80,7 +80,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "--env",
     help="gym environment to load",
-    default='MiniGrid-FourRooms-v0'
+    default='MiniGrid-FourRoomsTraps-v0'
 )
 parser.add_argument(
     "--seed",
