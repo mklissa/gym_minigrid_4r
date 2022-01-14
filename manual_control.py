@@ -72,15 +72,15 @@ def key_handler(event):
     #     step(env.actions.drop)
     #     return
 
-    # if event.key == 'enter':
-    #     step(env.actions.done)
-    #     return
+    if event.key == 'enter':
+        env.transfer()
+        return
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--env",
     help="gym environment to load",
-    default='MiniGrid-FourRoomsTraps-v0'
+    default='MiniGrid-FourRoomsTransfer-v0'
 )
 parser.add_argument(
     "--seed",
