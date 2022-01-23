@@ -170,8 +170,8 @@ class FourRoomsTransferEnv(MiniGridEnv):
     Can specify agent and goal position, if not it set at random.
     """
 
-    def __init__(self, max_steps=100, agent_pos=np.array([9,3]),
-                                      goal_pos=np.array([3,9]),
+    def __init__(self, max_steps=100, agent_pos=np.array([3,9]),
+                                      goal_pos=np.array([9,3]),
                                       distraction_pos = np.array([9,9]) ):
      # goal_pos=np.array([3,9])):
         self._agent_default_pos = agent_pos
