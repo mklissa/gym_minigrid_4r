@@ -28,6 +28,7 @@ def reset():
 
 def step(action):
     obs, reward, done, info = env.step(action)
+    print(env.agent_pos)
     print(obs['image'][:,:,0].T)
     print('step=%s, reward=%.2f' % (env.step_count, reward))
 
@@ -80,7 +81,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "--env",
     help="gym environment to load",
-    default='MiniGrid-FourRoomsTransfer-v0'
+    default='MiniGrid-FourRoomsWindy-v0'
 )
 parser.add_argument(
     "--seed",

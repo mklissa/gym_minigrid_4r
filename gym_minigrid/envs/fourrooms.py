@@ -349,7 +349,7 @@ class FourRoomsWindyEnv(MiniGridEnv):
                                         agent_pos=np.array([3,9]),
                                       goal_pos=np.array([9,3]),
                                       distraction_pos = np.array([9,9]) ):
-        self.windy_states= [np.array([4,8]),np.array([4,9]),np.array([4,10])]
+        self.windy_states= [np.array([4,2]),np.array([4,3]),np.array([4,4])]
         self._agent_default_pos = agent_pos
         self._goal_default_pos = goal_pos
         self._distraction_default_pos = distraction_pos
